@@ -1,0 +1,133 @@
+public class KNOTEN
+{
+   public String bezeichnung;
+   
+   public KNOTEN(String s)
+   {
+     
+   }
+    
+   public String BezeichnungGeben()
+   {
+     return bezeichnung;
+   }
+    
+   public String BezFormatGeben(int breite)
+   {
+     return null;
+   }
+   
+}
+
+public class GRAPH_MATRIX
+{
+    public String bezeichnung;
+    public int anzahlKnoten;
+    public KNOTEN [] knoten;
+    public int [] [] matrix;
+    public boolean [] besucht;
+
+    public GRAPH_MATRIX(int i)
+    {
+
+    }
+
+    public void KnotenEinfuegen(String bezeichner)
+    {
+        if(anzahlKnoten < knoten.length)
+        {
+            if (KnotenNummer(bezeichner)== -1)
+            {
+                knoten[anzahlKnoten] = new KNOTEN(bezeichner);
+                matrix[anzahlKnoten][anzahlKnoten] = 0;
+
+                for (int i = 0 ;i<anzahlKnoten ; i++)
+                {
+                    matrix[anzahlKnoten][i] = -1;
+                    matrix[i][anzahlKnoten] = -1;
+                }
+                anzahlKnoten = anzahlKnoten+1;
+            }
+        }
+    }
+
+    public void KanteEinfuegen(String von, String nach, int gewichtung)
+    {
+        int vonNummer, nachNummer;
+        vonNummer = KnotenNummer(von);
+        nachNummer = KnotenNummer(nach);
+        if((vonNummer != -1) && (nachNummer != -1) && (vonNummer != nachNummer))
+        {
+            matrix[vonNummer][nachNummer] = gewichtung;
+            matrix[nachNummer][vonNummer] = gewichtung;
+        }
+    }
+    
+    private int KnotenNummer(String bezeichner)
+    {
+        int i, ergeb;
+
+        ergeb = -1;
+        for (i=0; (i < anzahlKnoten) && (ergeb == -1); i++)
+            if (knoten[i].BezeichnungGeben().equals(bezeichner))
+                ergeb = i;
+
+        return ergeb;
+    }
+
+    public void Ausgeben()
+    {
+        int breite = 4;
+        System.out.print("    ");
+        for(int i=0; i<anzahlKnoten; i++)
+        {
+          System.out.print(knoten[i].BezFormatGeben(breite));
+        }
+        System.out.println();
+        for(int i=0; i<anzahlKnoten; i++)
+        {
+            System.out.print(knoten[i].BezFormatGeben(breite));
+            for (int j=0;j<anzahlKnoten; j++)
+                if(matrix [i][i] != -1)
+               {
+                System.out.println((matrix[i][i]+"    ").substring(0,breite));
+               }
+               else
+               {
+                   System.out.println("    ");
+               }
+            System.out.println();
+        }
+
+    }
+
+    public int KnotenAnzahlGeben()
+    {
+       return 0;
+    }
+
+    public int KanteGewichtGeben(String s1, String s2)
+    {
+      return 0;
+    }
+    
+    private void Besuchen(int knotenNummer)
+    {
+        
+    }
+    
+    public void Tiefensuche(String s)
+    {
+      int startNummer;
+        
+      startNummer = KnotenNummer(startKnoten);
+      if (startNummer!= -1)
+      {
+          for( i=0; i<anzahlKnoten; i++)
+          {
+              bessucht[i] = false;
+          }
+          Besuchen(startNummer);
+      }
+    }
+}
